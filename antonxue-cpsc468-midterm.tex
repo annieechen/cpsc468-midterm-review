@@ -1,0 +1,160 @@
+\documentclass[10pt]{article}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{algorithmicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{ulem}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+}
+% \usepackage{listings,lstautogobble}
+\geometry{margin=0.75in}
+\setlength\parindent{0pt}
+
+\title{CPSC 468 PSET Midterm Review}
+\author{Anton Xue [ayx2]}
+\date{}
+
+\mathchardef\mhyphen="2D
+
+% \theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{claim}{Claim}[section]
+\newtheorem{example}{Example}[section]
+
+\begin{document}
+\maketitle
+
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Real}{\mathrm{Re}}
+\newcommand{\Imag}{\mathrm{Im}}
+\newcommand{\res}{\mathrm{res}}
+\newcommand{\NP}{\mathrm{NP}}
+\newcommand{\NPC}{\mathrm{NP\mhyphen Complete}}
+\newcommand{\coNP}{\mathrm{coNP}}
+\newcommand{\coNPC}{\mathrm{coNP\mhyphen Complete}}
+\newcommand{\DP}{\mathrm{DP}}
+\newcommand{\PTIME}{\mathrm{P}}
+\newcommand{\AL}{\mathrm{AL}}
+\newcommand{\INDSET}{\mathrm{INDSET}}
+\newcommand{\NOTINDSET}{\overline{\mathrm{INDSET}}}
+\newcommand{\EXACTINDSET}{\mathrm{EXACT\mhyphen INDSET}}
+\newcommand{\SAT}{\mathrm{SAT}}
+\newcommand{\UNSAT}{\overline{\mathrm{SAT}}}
+\newcommand{\ACCEPT}{\mathrm{ACCEPT}}
+\newcommand{\REJECT}{\mathrm{REJECT}}
+
+\subsection*{Chapter 1}
+\begin{definition}[Turing Machine]
+  A $k$-tape Turing Machine $M$ is described by a tuple $(\Gamma, Q, \delta)$.
+  Assume $k \geq 2$, with $1$ read-only input tape and $k - 1$ work tapes.
+  The last work tape is assumed to be the output tape.
+  \begin{itemize}
+    \item
+      $\Gamma$ the finite alphabet of symbols that $M$ may have on its tapes.
+      Assume that $\Gamma$ contains at least $\{0,1,\square,\triangleright\}$.
+
+    \item
+      $Q$ a finite set of possible states $M$'s state register may be in.
+      Assume that $Q$ contains a $q_{start}$ and $q_{halt}$.
+
+    \item
+      $\delta : Q \times \Gamma^k \to Q
+      \times \Gamma^{k - 1} \times \{L, S, R\}^k$ a transition function for
+      $M$ that takes in the current state and each head's read, and outputs
+      the next state, with $k - 1$ writes on all the work tapes, and movement
+      direction for all $k$ tapes.
+  \end{itemize}
+\end{definition}
+
+\begin{definition}[Computing a Function]
+  Let $f : \{0, 1\}^\ast \to \{0, 1\}^\ast$ and
+  $T : \mathbb{N} \to \mathbb{N}$, with $M$ a TM.
+  We say that $M$ computes $f$ if for every $x \in \{0, 1\}^\ast$, if
+  $M$ is initialized to the start configuration on input $x$, then it halts
+  with $f(x)$ on the output tape.
+  We say $M$ computes $f$ in $T(n)$-time if its computation on every
+  $x$ requires at most $T(|x|)$ steps.
+\end{definition}
+
+\begin{definition}[Time Constructible]
+  A function $T: \mathbb{N} \to \mathbb{N}$ is time constructible if
+  $T(n) \geq n$ and there is a TM $M$ that computes the function
+  $x \mapsto \llcorner T(|x|) \lrcorner$ in time $T(n)$.
+  $T(n) \geq n$ is to allow the algorithm to read its input.
+\end{definition}
+
+\begin{example}[Time Constructible Functions]
+  Some time constructible functions are $n$, $n \log n$, $n^2$ and $2^n$.
+\end{example}
+
+\begin{claim}
+  For every $f : \{0, 1\}^\ast \to \{0, 1\}$ and time constructible
+  $T : \mathbb{N} \to \mathbb{N}$, if $f$ is computable in time $T(n)$ by
+  some TM $M$ using alphabet $\Gamma$, then it is able to compute the same
+  function using $\{0, 1, \square, \triangleright\}$ in 
+  $\left(c \log_2 | \Gamma| \right) \cdot T(n)$.
+  This is because we may express each symbol of $\Gamma$ using
+  $\log |\Gamma|$ binary bits, with some constant $c$ overhead.
+\end{claim}
+
+\begin{claim}
+  A $k$-tape TM can have its $k - 1$ work tapes simuliated by a single tape by
+  interleaving the $k$ tapes together.
+\end{claim}
+
+\begin{definition}[Oblivious Turing Machine]
+  An oblivious TM's head movement depends on the length of the input, not
+  the contents of the input.
+  Every TM can be simulated by an oblivious TM.
+\end{definition}
+
+\begin{claim}[Turing Machines as Strings]
+  Every binary string $x \in \{0, 1\}^\ast$ represents some TM, and every TM
+  is represented by infinite such strings (think: comments in a language).
+  The machine represented by $x$ is denoted $M_x$.
+\end{claim}
+
+\begin{claim}[Universal Turing Machine]
+  There exists a TM $\mathcal{U}$ such that for every
+  $x, \alpha \in \{0, 1\}^\ast$, $\mathcal{U}(x, a) = M_\alpha (x)$, where
+  $M_\alpha$ denotes the TM represented by $\alpha$.
+  Moreover, if $M_\alpha$ halts on input $x$ within $T$ steps, then
+  $\mathcal{U}_\alpha (x)$ halts within $C T \log T$ steps, where $C$ is
+  a number independent of $|x|$, and depends only on $M_\alpha$'s alphabet
+  size, number of tapes, and number of states.
+  In other words, the cost of simulating any machine $M_\alpha$ has a
+  logarithmic overhead.
+\end{claim}
+
+\subsection*{Chapter 2}
+
+
+
+\subsection*{Chapter 3}
+
+
+
+\subsection*{Chapter 4}
+
+
+\subsection*{Chapter 5}
+
+
+
+\subsection*{Chapter 6}
+
+
+
+
+\end{document}
+
