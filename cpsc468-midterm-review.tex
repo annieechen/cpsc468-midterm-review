@@ -53,6 +53,7 @@
 \newcommand{\UNSAT}{\overline{\mathrm{SAT}}}
 \newcommand{\ACCEPT}{\mathrm{ACCEPT}}
 \newcommand{\REJECT}{\mathrm{REJECT}}
+\newcommand{\DTIME}{\mathrm{DTIME}}
 
 \subsection*{Chapter 1}
 \begin{note}[Turing Machine]
@@ -153,8 +154,28 @@
   Diagonalization motherfuckers!
 \end{note}
 
-\subsection*{Chapter 2}
+\begin{note}[DTIME]
+  Let $T : \mathbb{N} \to \mathbb{N}$ be some function.
+  A language $L$ is in $\DTIME(T(n))$ iff there is a TM that runs in time
+  $c \cdot T(n)$ for some constant $c > 0$ and decides $L$.
+  This class contains \textbf{decision} problems.
+\end{note}
 
+\begin{note}[The Class P]
+  $P = \bigcup_{c \geq 1} \DTIME(n^c)$
+\end{note}
+
+\begin{note}[Church-Turing Thesis]
+  Every physically realizable computation device can be simulated by a TM.
+\end{note}
+
+\begin{note}[Bounds]
+  The asymptoptic operators $\{o, O, \Theta, \Omega, \omega\}$ can be thought
+  of as $\{ <, \leq, =, \geq, > \}$.
+\end{note}
+
+\subsection*{Chapter 2}
+  
 
 
 \subsection*{Chapter 3}
