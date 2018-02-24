@@ -24,7 +24,7 @@
 
 \mathchardef\mhyphen="2D
 
-% \theoremstyle{definition}
+\theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{claim}{Claim}[section]
@@ -51,9 +51,11 @@
 \newcommand{\EXACTINDSET}{\mathrm{EXACT\mhyphen INDSET}}
 \newcommand{\SAT}{\mathrm{SAT}}
 \newcommand{\UNSAT}{\overline{\mathrm{SAT}}}
+\newcommand{\TMSAT}{\mathrm{TMSAT}}
 \newcommand{\ACCEPT}{\mathrm{ACCEPT}}
 \newcommand{\REJECT}{\mathrm{REJECT}}
 \newcommand{\DTIME}{\mathrm{DTIME}}
+\newcommand{\NTIME}{\mathrm{NTIME}}
 \newcommand{\EXP}{\mathrm{EXP}}
 
 \newcommand{\st}{\mathrm{\ s.t.\ }}
@@ -76,8 +78,8 @@
       $\delta : Q \times \Gamma^k \to Q
       \times \Gamma^{k - 1} \times \{L, S, R\}^k$ a transition function for
       $M$ that takes in the current state and each head's read, and outputs
-      the next state, with $k - 1$ writes on all the work tapes, and movement
-      direction for all $k$ tapes.
+      the next state, with $k - 1$ writes on all the work tapes, and movements
+      for all $k$ tapes.
   \end{itemize}
 \end{note}
 
@@ -179,7 +181,32 @@
 \end{note}
 
 \subsection*{Chapter 2}
-\begin{note}[The Class $\NP$]
+\begin{note}[Non-Deterministic Turing Machine]
+  A non-deterministic TM is endowed with two transition functions
+  $\delta_0$ and $\delta_1$ along with a special accept state $q_{accept}$.
+  The NDTM may use either transition function per time step.
+  For every input $x$, we say that $M(x) = 1$ if there \textbf{exists}
+  some sequence of transition function choises
+  that would cause $M$ to reach $q_{accept}$.
+  Otherwise, if every sequence of non-deterministic choices causes $M$ to halt
+  on $x$ without reaching $q_{accept}$, then we say that $M(x) = 0$.
+  $M$ runs in time $T(n)$ if for every input $x \in \{0, 1\}^\ast$ and every
+  sequence of non-deterministic choices, $M$ reaches eitehr the halting state
+  or $q_{accept}$ within $T(|x|)$ steps.
+\end{note}
+
+\begin{note}[$\NTIME$]
+  For every function $T : \mathbb{N} \to \mathbb{N}$ and
+  $L \subseteq \{0, 1\}^\ast$, we say that $L \in \NTIME(T(n))$ if there is
+  a constant $c > 0$ and a $c \cdot T(n)$-time NDTM $M$ such that for
+  every $x \in \{0, 1\}^\ast$, we have $x \in L \iff M(x) = 1$.
+\end{note}
+
+\begin{note}[$\NP$]
+  $\NP = \bigcup_{c \in \mathbb{N}} \NTIME(n^c)$
+\end{note}
+
+\begin{note}[]
   A language $L \subseteq \{0, 1\}^\ast$ is in $\NP$ if there exists a
   polynomial $p : \mathbb{N} \to \mathbb{N}$ and a polynomial time TM $M$
   (called the \textbf{verifier} for $L$) $\st$ for every
@@ -187,13 +214,46 @@
   $x \in L \iff \exists u \in \{0, 1\}^{p(|x|)} \st M(x, u) = 1$.
   If $x \in L$ and $u \in \{0, 1\}^{p(|x|)}$ satisfy $M(x, u) = 1$,
   we call $u$ a \textbf{certificate} for $x$ (with respect to $L$ and $M$).
- 
   $\NP$ is the class of languages for which we can tell if
   $u$ is a solution to the problem $x \in L$ in polynomial time.
 \end{note}
 
+\begin{note}[Reductions, $\NP$-hardness, and $\NP$-completeness]
+  We say that a language $L \subseteq \{0, 1\}^\ast$ is a polynomial time
+  \textbf{Karp reducible} to a language $L^\prime \subseteq \{0, 1\}^\ast$ if
+  there is a polynomial time computable function
+  $f : \{0, 1\}^\ast \to \{0, 1\}^\ast$ such that for
+  every $x \in \{0, 1\}^\ast$, we have $x \in L \iff f(x) \in L^\prime$.
+  We say that $L^\prime$ is $\NP$-hard if $L \leq_p L^\prime$ for every
+  $L \in \NP$.
+  We say that $L^\prime$ is $\NP$-complete if $L^\prime$ is $\NP$-hard and
+  $L^\prime \in \NP$.
+\end{note}
+
+\begin{note}[Transitivity]
+  If $L \leq_p L^\prime$, and $L^\prime \leq_p L^{\prime \prime}$, then
+  $L \leq_p L^{\prime \prime}$.
+\end{note}
+
+\begin{note}
+  If $L$ is $\NP$-hard and $L \in \PTIME$, then $\PTIME = \NP$.
+\end{note}
+
+\begin{note}
+  If $L$ is $\NPC$ then $L \in \PTIME \iff \PTIME = \NP$.
+\end{note}
+
+\begin{note}[TMSAT]
+  $\TMSAT = \{ (\alpha, x, 1^n, 1^t) :
+    \text{$\exists u \in \{0, 1\}^n \st
+          M_a (x, u) = 1$ within $t$ steps} \}$
+\end{note}
+
+
+
+
 \begin{note}[$\EXP$]
-  $\EXP = \bigcup_{c > 1} \DTIME\left(2^{n^c}\right)$.
+  $\EXP = \bigcup_{c > 1} \DTIME\left(2^{n^c}\right)$
 \end{note}
 
 \subsection*{Chapter 3}
