@@ -54,6 +54,9 @@
 \newcommand{\ACCEPT}{\mathrm{ACCEPT}}
 \newcommand{\REJECT}{\mathrm{REJECT}}
 \newcommand{\DTIME}{\mathrm{DTIME}}
+\newcommand{\EXP}{\mathrm{EXP}}
+
+\newcommand{\st}{\mathrm{\ s.t.\ }}
 
 \subsection*{Chapter 1}
 \begin{note}[Turing Machine]
@@ -154,15 +157,16 @@
   Diagonalization motherfuckers!
 \end{note}
 
-\begin{note}[DTIME]
+\begin{note}[$\DTIME$]
   Let $T : \mathbb{N} \to \mathbb{N}$ be some function.
-  A language $L$ is in $\DTIME(T(n))$ iff there is a TM that runs in time
+  A language $L$ is in $\DTIME(T(n))$ iff there is a deterministic
+  TM that runs in time
   $c \cdot T(n)$ for some constant $c > 0$ and decides $L$.
   This class contains \textbf{decision} problems.
 \end{note}
 
-\begin{note}[The Class P]
-  $P = \bigcup_{c \geq 1} \DTIME(n^c)$
+\begin{note}[The Class $\PTIME$]
+  $\PTIME = \bigcup_{c \geq 1} \DTIME(n^c)$
 \end{note}
 
 \begin{note}[Church-Turing Thesis]
@@ -175,8 +179,22 @@
 \end{note}
 
 \subsection*{Chapter 2}
-  
+\begin{note}[The Class $\NP$]
+  A language $L \subseteq \{0, 1\}^\ast$ is in $\NP$ if there exists a
+  polynomial $p : \mathbb{N} \to \mathbb{N}$ and a polynomial time TM $M$
+  (called the \textbf{verifier} for $L$) $\st$ for every
+  $x \in \{0, 1\}^\ast$, we have
+  $x \in L \iff \exists u \in \{0, 1\}^{p(|x|)} \st M(x, u) = 1$.
+  If $x \in L$ and $u \in \{0, 1\}^{p(|x|)}$ satisfy $M(x, u) = 1$,
+  we call $u$ a \textbf{certificate} for $x$ (with respect to $L$ and $M$).
+ 
+  $\NP$ is the class of languages for which we can tell if
+  $u$ is a solution to the problem $x \in L$ in polynomial time.
+\end{note}
 
+\begin{note}[$\EXP$]
+  $\EXP = \bigcup_{c > 1} \DTIME\left(2^{n^c}\right)$.
+\end{note}
 
 \subsection*{Chapter 3}
 
