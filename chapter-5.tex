@@ -61,6 +61,30 @@ For every $i \in N$, we define $\Sigma_{i} \TIME(T(n))$ (resp. $\Pi_{i}\TIME(T(n
 For every $i \in N$, $\Sigma_{i}^{p} = \cup_{c}\Sigma_{i}\TIME(n^c)$ and $\Pi_{i}^{p} = \cup_{c} \Pi_{i} \TIME(n^c)$.
 \end{note}
 
+\begin{note}
+Letting $\textbf{AP} = \cup_{c} \ATIME(n^c)$, we have that $\textbf{AP} = \textbf{PSPACE}$.
+
+Proof: $\textbf{PSPACE} \subseteq \textbf{AP}$ follows since $\TQBF$ is trivially in $\textbf{AP}$ (just "guess" values for each existentially quantified variable using an $\exists$ state and for universally quantified variables using a $\forall$ state, and do a deterministic polynomial-time computation at the end) and every $\textbf{PSPACE}$ language reduces to $\TQBF$. To show that $\textbf{AP} \in \textbf{PSPACE}$ we can use a recursive procedure similar to the one used to show that $\TQBF \in \textbf{PSPACE}$. 
+\end{note}
+
+
+%%% Not formatted / Incomplete %%%
+%\begin{note}[Time/Space tradeoff for SAT]%For every two functions S, T : N ? N, define TISP(T (n), S(n)) to be the set of languages decided by a TM M that on every input x takes at most O(T (|x|)) steps and uses at most O(S(|x|)) cells of its read/write tapes. Then, SAT?? TISP(n1.1, n0.1).
+%\end{note}
+
+%\begin{note}[Proof of Time/Space tradeoff for SAT]
+
+%\end{note}
+
+%\begin{note} [Oracle machines]
+%For every i ? 2, ?pi = NP?i?1SAT, where the latter class denotes the set of languages decided by polynomial-time NDTMs with access to the oracle ?i?1SAT.
+%\end{note}
+
+%\begin{note} [Proof of SAT orcale PNDTMs]
+%\end{note}
+
+
+
 
 
 
