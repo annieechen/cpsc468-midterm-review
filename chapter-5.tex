@@ -1,17 +1,38 @@
 \subsection*{Chapter 5: The Polynomial Hierarchy and Alterations}
-\begin{note}[The class $\sum_{2}^{p}$]
-The class $\sum_{2}^{p}$ is the set of all languages for which there exists a polynomial TM $M$
+\begin{note}[The class $\Sigma_{2}^{p}$]
+The class $\Sigma_{2}^{p}$ is the set of all languages for which there exists a polynomial TM $M$
 and a polynomial $q$ such that
 $x \in L \iff \exists u \in \{0,1\}^{q(|x|)} \forall v \in \{0,1\}^{q(|x|)} M(x, u, v) = 1 $
 \end{note}
 
 \begin{note}[Polynomial Hierarchy]
-For $ i \geq$ 1, a language $L$ is in $\sum_{2}^{p}$ if there exists a polynomial TM $M$
+For $ i \geq$ 1, a language $L$ is in $\Sigma_{2}^{p}$ if there exists a polynomial TM $M$
 and a polynomial $q$ such that
 $x \in L \iff \exists u_{1} \in \{0,1\}^{q(|x|)} \forall u_{2} \in \{0,1\}^{q(|x|)} \ldots
 Q_{i}u_{i} \in \{0,1\}^{q(|x|)} M(x, u_{1}, \ldots, u_{i}) = 1 $,
 where $Q_i$ denotes $\forall$ or $\exists$ depending on whether $i$ is odd or even respectively.
-The $\textit{polynomial hierarchy}$ is the set $\textbf{PH} = \cup_{i} \sum_{i}^{p}$.
+The $\textit{polynomial hierarchy}$ is the set $\textbf{PH} = \cup_{i} \Sigma_{i}^{p}$.
 \end{note}
 
+\begin{note}
+$\sum_{1}^{p} = \textbf{NP}. 
+\Pi_{1}^{p} = \textbf{coNP}$. 
+For every $i$, $\Sigma_{i}^{p} \subseteq \Pi_{i+1}^{p} \subseteq \Sigma_{i}^{p}.$ 
+Thus, $\textbf{PH} = \cup_{i > 0} \Pi_{i}^{p}$.
+\end{note}
+
+\begin{note}[Collapse]
+We believe that the polynomial hierarchy does not collapse.
+
+\begin{enumerate}
+	\item
+		For every $i \geq 1$, if $\Sigma_{i}^{p} = \Pi_{i}^{p}$, then 
+		$\textbf{PH} = \cup_{i} \Sigma_{i}^{p}$; that is, the polynomial hierarchy collapses
+		to the $i^{th}$ level.
+	\item
+		If $\textbf{P} = \textbf{NP}$, then $\textbf{PH} = \textbf{P}$; that is, the polynomial
+		hierarchy collapses to $\textbf{P}$.
+\end{enumerate}
+Prove 2 by induction on $i$ that $\Sigma_{i}^{p}, \Pi_{i}^{p} \subseteq \textbf{P}$.
+\end{note}
 
