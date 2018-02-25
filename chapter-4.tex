@@ -158,4 +158,21 @@
     \psi_{i - 1} (D_1, D_2)$.
 \end{note}
 
+\begin{note}
+  $\TQBF \in \NPSPACE$ because we have said nothing about the out-degrees of
+  the configuration graph above.
+\end{note}
+
+\begin{note}[Savitch's Theorem]
+  For any space constructible $S : \mathbb{N} \to \mathbb{N}$ with
+  $S(n) \geq \log n$, $\NSPACE(S(n)) \subset \SPACE(S(n)^2)$.
+\end{note}
+
+\begin{note}[Sketch for Savitch's Theorem]
+  The configuration graph of some $M$ that works in $\NSPACE(S(n))$ has at
+  most $2^{O(S(n))}$ vertices.
+  This can then be encoded as a $O(S(n)^2)$ space formula for checking.
+\end{note}
+
+
 
