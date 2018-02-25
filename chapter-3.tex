@@ -1,0 +1,59 @@
+\subsection*{Chapter 3: Diagonalization}
+\begin{note}[Main Idea]
+  For two complexity classes $C_1$ and $C_2$, we show
+  $C_1 \subsetneq C_2$ by presenting $L \st L \in C_2$ but $L \not\in C_1$.
+\end{note}
+
+\begin{note}[Time Hierarchy Theorem]
+  If $f, g$ are time constructible function satisfying
+  $f(n) \log f(n) = o (g(n))$, then we have
+  $\DTIME(f(n)) \subsetneq \DTIME(g(n))$.
+\end{note}
+
+\begin{note}[Sketch for $\DTIME(n) \subsetneq \DTIME\left(n^{1.5}\right)$]
+  For the ``diagonal'' machine $D$:
+  on input $x$ run for $|x|^{1.4}$ steps on the universal TM $\mathcal{U}$
+  to simulate $M_x (x)$.
+  If $\mathcal{U}$ outputs a bit $b \in \{0, 1\}$, we yield the opposite,
+  which is $1 - b$, and $0$ if it fails to halt in time $|x|^{1.4}$.
+  By definition, $D$ always halts within $n^{1.4}$ steps and so any language
+  decided by $D$ is in $\DTIME\left(n^{1.5}\right)$.
+  There is no machine $M$ that always halts within $n$ steps that can emulate
+  $D$ because $D$ will have captured its result and yielded the opposite.
+  Thus, $L \in \DTIME\left(n^{1.5}\right)$, but $L \not\in \DTIME(n)$.
+\end{note}
+
+\begin{note}[Non-deterministic Time Hierarchy Theorem]
+  If $f, g$ are time constructible funcitons satisfying the bound
+  $f(n + 1) = o(g(n))$,
+  then $\NTIME(f(n)) \subsetneq \NTIME(g(n))$.
+\end{note}
+
+\begin{note}[Sketch for $\NTIME(n) \subsetneq \NTIME\left(n^{1.5}\right)$]
+Apply lazy diagonalization.
+Define $f : \mathbb{N} \to \mathbb{N}$ as follows: $f(1) = 2$
+and $f(i + 1) = 2^{f(i)^{1.2}}$.
+We will find some $n$ such that $f(i) < n \leq f(i + 1)$.
+The goal for our diagonal machine is to flip the result on the
+set $\{ 1^n : f(i) < n \leq f(i + 1)\}$.
+Define $D$ as:
+If (1) $f(i) < n < f(i + 1)$ then simulate $M_i$ on input $1 ^{n + 1}$ using
+non-determinism in $n^{1.1}$ time and output.
+Otherwise if (2) $n = f(i + 1)$ accept $1^n$ iff $M_i$ rejects
+$1^{f(i) + 1}$ in $(f(i) + 1)^{1.1}$ time.
+Thus, if $f(i) < n < f(i + 1)$ then
+$D\left(1^n\right) = M_i \left(1^{n + 1}\right)$, otherwise
+$D\left(1^{f(i + 1)}\right) \neq M_i \left(1^{f(i) + 1}\right)$.
+\end{note}
+
+\begin{note}[Ladner's Theorem]
+  Suppose that $\PTIME \neq \NP$, then there exists a language
+  $L \in \NP \setminus \PTIME$ that is not $\NPC$.
+\end{note}
+
+\begin{note}[Sketch for Ladner's Theorem]
+  We make some $L \in \NP \setminus \PTIME$ ``easy enough'' using padding so
+  that it is no longer $\NPC$, while keeping it ``hard enough'' so that it is
+  not $\PTIME$.
+  We do this by taking an $\NPC$ language and ``blowing holdes'' in it.
+\end{note}

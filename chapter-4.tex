@@ -1,0 +1,100 @@
+\subsection*{Chapter 4: Space Complexity}
+\begin{note}[Space-bounded Computation]
+  Let $S : \mathbb{N} \to \mathbb{N}$ and $L \subseteq \{0, 1\}^\ast$.
+  We say that $L \in \SPACE(s(n))$ if there is a constant $c$ and
+  a deterministic TM $M$ that
+  decides $L$ with at most $c \cdot s(n)$ locations on
+  $M$'s work tapes (excluding the input tape) are ever visited by $M$'s head
+  during its computation on every input of length $n$.
+  Likewise, say that $L \in \NSPACE(s(n))$ if there is an $\NDTM$ $M$ deciding
+  $L$ that never uses more than $c \cdot s(n)$ non-blank tape locations on
+  length $n$ inputs, regardless of its non-deterministic choices.
+\end{note}
+
+\begin{note}
+  $\DTIME(S(n)) \subseteq \SPACE(S(n))$ since a TM can access only one
+  tape cell per step, so a $\SPACE(S(n))$ TM can run for much longer than
+  $S(n)$ steps.
+  In fact, halting behavior can run for as much as $2^{\Omega (S(n))}$ steps
+  -- as an example, a counter machine that counts from $1$ to
+  $2^{S(n) - 1}$.
+  Any language that is in $\SPACE(S(n))$ is
+  in $\DTIME\left(2^{O(S(n))}\right)$.
+\end{note}
+
+\begin{note}
+  For space constructible $S: \mathbb{N} \to \mathbb{N}$:
+  $\DTIME(S(n)) \subseteq \SPACE(S(n)) \subseteq \NSPACE(S(n))
+  \subseteq \DTIME\left(2^{O(S(n))}\right)$.
+\end{note}
+
+\begin{note}[Configuration Graph]
+  A configuration of a TM $M$ consists of the contents of all non-blank
+  entries on $M$'s tapes, along with its state and head position at a
+  particular point in execution.
+  For eveyr space $S(n)$ TM $M$ and input $x \in \{0, 1\}^\ast$, the
+  configuration graph of $M$ on nput $x$, denote $G_{M, x}$ is a directed
+  graph whose nodes correspond to all possible configurations of $M$, where
+  the input contains the value $x$ and the work tapes have at most $S(|x|)$
+  non-blank cells.
+  The graph has a directed edge from a configuration $C$ to a configuration
+  $C^\prime$ if $C^\prime$ can be reached from $C$ in one step according
+  to $M$'s transition function.
+  If $M$ is deterministic, then the graph has out-degree one, and if $M$
+  is non-deterministic, then the grpah has outdegree at most two.
+  Let $G_{M, x}$ be the configuration graph of a space-$S(n)$ machine $M$ on
+  some input $x \st |x| = n$:
+  \begin{itemize}
+    \item
+      Every vertex in $G_{M, x}$ can be described using $cS(n)$ bits for some
+      constant $c$ (depending on $M$'s alphabet size and number of tapes) and
+      in particular, $G_{M, x}$ has at most $2^{cS(n)}$ vertices.
+
+    \item
+      There is an $O(S(n))$-size CNF formula $\varphi_{M, x}$ such that
+      for every two strings $C$ and $C^\prime$, we have
+      $\varphi_{M, x} (C, C^\prime) = 1$ iff $C$ and $C^\prime$ encode two
+      neighboring configurations in $G_{M, x}$.
+  \end{itemize}
+\end{note}
+
+\begin{note}[Space Complexity Classes]
+  We can think of $\PSPACE$ and $\NPSPACE$ as analogs to time
+  classes $\PTIME$ and $\NP$.
+
+  \begin{itemize}
+    \item
+      $\PSPACE = \bigcup_{c \geq 1} \SPACE(n^c)$
+
+    \item
+      $\NPSPACE = \bigcup_{c \geq 1} \NSPACE(n^c)$
+
+    \item
+      $\LSPACE = \SPACE(\log n)$
+
+    \item
+      $\NLSPACE = \NSPACE(\log n)$
+  \end{itemize}
+\end{note}
+
+\begin{note}[Space Hierarchy Theorem]
+  If $f, g$ are space constructible with
+  $f(n) = o(g(n)): \SPACE(f(n)) \subsetneq \SPACE(g(n))$.
+\end{note}
+
+\begin{note}
+  We do not know if $\PTIME = \PSPACE$, although we think no.
+  Note that $\NP \subseteq \PSPACE$.
+\end{note}
+
+\begin{note}[$\PSPACE$ Completeness]
+  A language $L^\prime$ is $\PSPACE$-hard if for every $L \in \PSPACE$,
+  $L \leq_p L^\prime$.
+  If in addition $L^\prime \in \PSPACE$, then $L^\prime$ is
+  $\PSPACE$ Complete.
+\end{note}
+
+\begin{note}[$\SPACE \TMSAT$]
+  $\SPACE \TMSAT = \left\{ (M, w, 1^n) :
+    \text{$\DTM M$ accepts $w$ in space $n$} \right\}$.
+\end{note}
