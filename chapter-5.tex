@@ -3,6 +3,8 @@
 The class $\Sigma_{2}^{p}$ is the set of all languages for which there exists a polynomial TM $M$
 and a polynomial $q$ such that
 $x \in L \iff \exists u \in \{0,1\}^{q(|x|)} \forall v \in \{0,1\}^{q(|x|)} M(x, u, v) = 1 $
+
+Note that $\Sigma_{2}^{p}$ contains the classes $\textbf{NP}$ and $\textbf{coNP}$.
 \end{note}
 
 \begin{note}[Polynomial Hierarchy]
@@ -35,4 +37,35 @@ We believe that the polynomial hierarchy does not collapse.
 \end{enumerate}
 Prove 2 by induction on $i$ that $\Sigma_{i}^{p}, \Pi_{i}^{p} \subseteq \textbf{P}$.
 \end{note}
+
+\begin{note}
+For every $i \in N$, both $\Sigma_{i}^{p}$ and $\Pi_{i}^{p}$ have complete problems. By contrast the polynomial hierarchy itself is believed not to have a complete problem, as is shown by the following simple claim:
+
+If there exists a language $L$ that is $\textbf{PH}$-complete, then there exists an $i$ such that $\textbf{PH} = \Sigma_{i}^{p}$ (and hence the hierarchy collapses to its $i^{th}$ level.)
+\end{note}
+
+\begin{note}
+$\textbf{PH} $is contained in PSPACE. A simple corollary of the previous claim is that unless the polynomial hierarchy collapses, $\textbf{PH} \neq \textbf{PSPACE}$. Indeed, otherwise the $\PSPACE$-complete problem $\TQBF$ defined in Section 4.2 would be PH-complete.
+\end{note}
+
+\begin{note}[Alternating Time]
+For every $T : N \to N$, we say that an alternating TM $M$ runs in $T(n)$-time if for every input $x \in \{0, 1\}^{\ast}$ and for every possible sequence of transition function choices, $M$ halts after at most $T(|x|)$ steps.
+We say that a language $L$ is in $\ATIME(T(n))$ if there is a constant $c$ and a $cT(n)$-time ATM $M$ such that for every $x \in \{0, 1\}^{\ast}$, $M$ accepts $x \iff x \in L$.
+\end{note}
+
+\begin{note}
+For every $i \in N$, we define $\Sigma_{i} \TIME(T(n))$ (resp. $\Pi_{i}\TIME(T(n))$) to be the set of languages accepted by a $T(n)$-time ATM $M$ whose initial state is labeled "$\exists$" (resp. "$\forall$") and on which every input and on every (directed) path from the starting configuration in the configuration graph, $M$ can alternate at most $i$ - 1 times from states with one label to states with the other label.
+\end{note}
+
+\begin{note}
+For every $i \in N$, $\Sigma_{i}^{p} = \cup_{c}\Sigma_{i}\TIME(n^c)$ and $\Pi_{i}^{p} = \cup_{c} \Pi_{i} \TIME(n^c)$.
+\end{note}
+
+
+
+
+
+
+
+
 
