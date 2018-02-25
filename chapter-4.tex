@@ -87,14 +87,32 @@
   Note that $\NP \subseteq \PSPACE$.
 \end{note}
 
-\begin{note}[$\PSPACE$ Completeness]
+\begin{note}[$\PSPACE$-completeness]
   A language $L^\prime$ is $\PSPACE$-hard if for every $L \in \PSPACE$,
   $L \leq_p L^\prime$.
   If in addition $L^\prime \in \PSPACE$, then $L^\prime$ is
-  $\PSPACE$ Complete.
+  $\PSPACE$-complete.
 \end{note}
 
 \begin{note}[$\SPACE \TMSAT$]
   $\SPACE \TMSAT = \left\{ (M, w, 1^n) :
     \text{$\DTM M$ accepts $w$ in space $n$} \right\}$.
 \end{note}
+
+\begin{note}[Quantified Boolean Formula]
+  A $\QBF$ is of form
+  $Q_1 x_1 . Q_2 x_2 . \dots . Q_n x_n . \varphi (x_1, x_2, \dots, x_n)$
+  where each $Q_i \in \{\exists, \forall \}$, $x_i$ range over $\{0, 1\}$,
+  and $\varphi$ is a plain, unquantified formula.
+\end{note}
+
+\begin{note}
+  Since all variables of a $\QBF$ are bounded by some quantifier, $\QBF$ is
+  always either $1$ or $0$ as a result.
+\end{note}
+
+\begin{note}
+  $\TQBF$ is $\PSPACE$ complete.
+\end{note}
+
+
