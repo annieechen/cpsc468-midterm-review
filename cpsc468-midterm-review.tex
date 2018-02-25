@@ -392,6 +392,35 @@ $D\left(1^{f(i + 1)}\right) \neq M_i \left(1^{f(i) + 1}\right)$.
   \subseteq \DTIME\left(2^{O(S(n))}\right)$
 \end{note}
 
+\begin{note}[Configuration Graph]
+  A configuration of a TM $M$ consists of the contents of all non-blank
+  entries on $M$'s tapes, along with its state and head position at a
+  particular point in execution.
+  For eveyr space $S(n)$ TM $M$ and input $x \in \{0, 1\}^\ast$, the
+  configuration graph of $M$ on nput $x$, denote $G_{M, x}$ is a directed
+  graph whose nodes correspond to all possible configurations of $M$, where
+  the input contains the value $x$ and the work tapes have at most $S(|x|)$
+  non-blank cells.
+  The graph has a directed edge from a configuration $C$ to a configuration
+  $C^\prime$ if $C^\prime$ can be reached from $C$ in one step according
+  to $M$'s transition function.
+  If $M$ is deterministic, then the graph has out-degree one, and if $M$
+  is non-deterministic, then the grpah has outdegree at most two.
+  Let $G_{M, x}$ be the configuration graph of a space-$S(n)$ machine $M$ on
+  some input $x \st |x| = n$:
+  \begin{itemize}
+    \item
+      Every vertex in $G_{M, x}$ can be described using $cS(n)$ bits for some
+      constant $c$ (depending on $M$'s alphabet size and number of tapes) and
+      in particular, $G_{M, x}$ has at most $2^{cS(n)}$ vertices.
+
+    \item
+      There is an $O(S(n))$-size CNF formula $\varphi_{M, x}$ such that
+      for every two strings $C$ and $C^\prime$, we have
+      $\varphi_{M, x} (C, C^\prime) = 1$ iff $C$ and $C^\prime$ encode two
+      neighboring configurations in $G_{M, x}$.
+  \end{itemize}
+\end{note}
 
 
 \subsection*{Chapter 5: The Polynomial Hierarchy and Alterations}
