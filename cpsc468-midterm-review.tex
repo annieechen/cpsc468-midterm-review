@@ -58,6 +58,9 @@
 \newcommand{\NTIME}{\mathrm{NTIME}}
 \newcommand{\EXP}{\mathrm{EXP}}
 \newcommand{\NEXP}{\mathrm{NEXP}}
+\newcommand{\SPACE}{\mathrm{SPACE}}
+\newcommand{\PSPACE}{\mathrm{PSPACE}}
+\newcommand{\NSPACE}{\mathrm{NSPACE}}
 
 \newcommand{\st}{\mathrm{\ s.t.\ }}
 
@@ -331,9 +334,64 @@
 \end{note}
 
 \begin{note}[Sketch for $\NTIME(n) \subsetneq \NTIME\left(n^{1.5}\right)$]
+Apply lazy diagonalization.
+Define $f : \mathbb{N} \to \mathbb{N}$ as follows: $f(1) = 2$
+and $f(i + 1) = 2^{f(i)^{1.2}}$.
+We will find some $n$ such that $f(i) < n \leq f(i + 1)$.
+The goal for our diagonal machine is to flip the result on the
+set $\{ 1^n : f(i) < n \leq f(i + 1)\}$.
+Define $D$ as:
+If (1) $f(i) < n < f(i + 1)$ then simulate $M_i$ on input $1 ^{n + 1}$ using
+non-determinism in $n^{1.1}$ time and output.
+Otherwise if (2) $n = f(i + 1)$ accept $1^n$ iff $M_i$ rejects
+$1^{f(i) + 1}$ in $(f(i) + 1)^{1.1}$ time.
+Thus, if $f(i) < n < f(i + 1)$ then
+$D\left(1^n\right) = M_i \left(1^{n + 1}\right)$, otherwise
+$D\left(1^{f(i + 1)}\right) \neq M_i \left(1^{f(i) + 1}\right)$.
+\end{note}
+
+\begin{note}[Ladner's Theorem]
+  Suppose that $\PTIME \neq \NP$, then there exists a language
+  $L \in \NP \setminus \PTIME$ that is not $\NPC$.
+\end{note}
+
+\begin{note}[Sketch for Ladner's Theorem]
+  We make some $L \in \NP \setminus \PTIME$ ``easy enough'' using padding so
+  that it is no longer $\NPC$, while keeping it ``hard enough'' so that it is
+  not $\PTIME$.
+  We do this by taking an $\NPC$ language and ``blowing holdes'' in it.
 \end{note}
 
 \subsection*{Chapter 4: Space Complexity}
+\begin{note}[Space-bounded Computation]
+  Let $S : \mathbb{N} \to \mathbb{N}$ and $L \subseteq \{0, 1\}^\ast$.
+  We say that $L \in \SPACE(s(n))$ if there is a constant $c$ and
+  a deterministic TM $M$ that
+  decides $L$ with at most $c \cdot s(n)$ locations on
+  $M$'s work tapes (excluding the input tape) are ever visited by $M$'s head 
+  during its computation on every input of length $n$.
+  Likewise, say that $L \in \NSPACE(s(n))$ if there is an NDTM $M$ deciding
+  $L$ that never uses more than $c \cdot s(n)$ non-blank tape locations on
+  length $n$ inputs, regardless of its non-deterministic choices.
+\end{note}
+
+\begin{note}
+  $\DTIME(S(n)) \subseteq \SPACE(S(n))$ since a TM can access only one
+  tape cell per step, so a $\SPACE(S(n))$ TM can run for much longer than
+  $S(n)$ steps.
+  In fact, halting behavior can run for as much as $2^{\Omega (S(n))}$ steps
+  -- as an example, a counter machine that counts from $1$ to
+  $2^{S(n) - 1}$.
+  Any language that is in $\SPACE(S(n))$ is
+  in $\DTIME\left(2^{O(S(n))}\right)$.
+\end{note}
+
+\begin{note}
+  For space constructible $S: \mathbb{N} \to \mathbb{N}$:
+  $\DTIME(S(n)) \subseteq \SPACE(S(n)) \subseteq \NSPACE(S(n))
+  \subseteq \DTIME\left(2^{O(S(n))}\right)$
+\end{note}
+
 
 
 \subsection*{Chapter 5: The Polynomial Hierarchy and Alterations}
