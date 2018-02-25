@@ -5,3 +5,13 @@ and a polynomial $q$ such that
 $x \in L \iff \exists u \in \{0,1\}^{q(|x|)} \forall v \in \{0,1\}^{q(|x|)} M(x, u, v) = 1 $
 \end{note}
 
+\begin{note}[Polynomial Hierarchy]
+For $ i \geq$ 1, a language $L$ is in $\sum_{2}^{p}$ if there exists a polynomial TM $M$
+and a polynomial $q$ such that
+$x \in L \iff \exists u_{1} \in \{0,1\}^{q(|x|)} \forall u_{2} \in \{0,1\}^{q(|x|)} \ldots
+Q_{i}u_{i} \in \{0,1\}^{q(|x|)} M(x, u_{1}, \ldots, u_{i}) = 1 $,
+where $Q_i$ denotes $\forall$ or $\exists$ depending on whether $i$ is odd or even respectively.
+The $\textit{polynomial hierarchy}$ is the set $\textbf{PH} = \cup_{i} \sum_{i}^{p}$.
+\end{note}
+
+
