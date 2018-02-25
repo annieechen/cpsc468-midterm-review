@@ -55,6 +55,8 @@
       for every two strings $C$ and $C^\prime$, we have
       $\varphi_{M, x} (C, C^\prime) = 1$ iff $C$ and $C^\prime$ encode two
       neighboring configurations in $G_{M, x}$.
+      This can be expressed as an AND of many checks to see if the transition
+      of the machine state is valid.
   \end{itemize}
 \end{note}
 
@@ -111,8 +113,49 @@
   always either $1$ or $0$ as a result.
 \end{note}
 
-\begin{note}
+\begin{note}($\TQBF$)
   $\TQBF$ is $\PSPACE$ complete.
+\end{note}
+
+\begin{note}[Sketch for $\TQBF \in \PSPACE$]
+  Let $n$ be the number of quantified variables in $\TQBF$ $\Psi$,
+  and proceed by induction.
+  If $n = 0$, then we are done.
+  Otherwise for $n > 0$, the formula will have form
+  $Q_n x_n . Q_{n - 1} x_{n - 1} . \dots . Q_1 x_1 . \varphi$.
+  If $Q$ is $\exists$, we check if either $\Psi |_{x_n = 1}$ or
+  $\Psi_{x_n = 0}$ is true.
+  If $Q$ is $\forall$, we check if both $\Psi |_{x_n = 1}$ and
+  $\Psi_{x_n = 1}$ are true.
+\end{note}
+
+\begin{note}[Sketch for $\TQBF$ is $\PSPACE$-hard]
+  For some $M$ that can decide $L$ in $S(n)$ space, we can encode the
+  configuration graph as a $\TQBF$ $\Psi$
+  such that on input $x \in \{0, 1\}^n$, $\Psi \in \TQBF \iff M(x) = 1$.
+  Observe that because $M$ can decide $L$ in $S(n)$ space, we thus need
+  $S(n)$ bits of information to encode $M$'s configuration graph on input $x$
+  We use the property that every configuration graph for $M$ on input $x$ has
+  a formula $\varphi_{M, x}$ such that for two strings,
+  $C, C^\prime \in \{0, 1\}^m$, we have $\varphi_{M} (C, C^\prime) = 1$
+  iff $C$ and $C^\prime$ encode two adjacent configurations in the
+  configuration graph.
+  When we plug in $C_{start}$ and $C_{accept}$, this gets us what we want.
+  Define $\Psi$ by induction.
+
+  \textbf{Naive solution}: let $\Psi_i (C, C^\prime) = 1$ iff there is a
+  path of length at most $2^i$ from $C$ to $C^\prime$ in $G_{M, x}$.
+  Define the formula
+  $\Psi_{i} (C, C^\prime) = \exists C^{\prime \prime}
+    \Psi_{i - 1} (C, C^{\prime \prime}) \land
+    \psi_{i - 1} (C^{\prime \prime}, C^\prime)$.
+  However this is a problem because $\Psi_i$ may double each layer.
+
+  \textbf{Less naive}:
+  $\Psi_{i} (C,C^\prime)=\exists C^{\prime\prime} . \forall D_1 . \forall D_2.
+  \left( (D_1 = C \land D_2 = C^{\prime \prime}) \lor
+         (D_1 = C^{\prime \prime} \land D_2 = C^\prime) \right) \implies
+    \psi_{i - 1} (D_1, D_2)$.
 \end{note}
 
 
