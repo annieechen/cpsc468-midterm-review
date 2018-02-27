@@ -1,18 +1,23 @@
 \subsection*{Chapter 5: The Polynomial Hierarchy and Alterations}
-\begin{note}[The class $\Sigma_{2}^{p}$]
-The class $\Sigma_{2}^{p}$ is the set of all languages for which there exists a polynomial TM $M$
+\begin{note}[The Class $\Sigma_{2}^{p}$]
+The class $\Sigma_{2}^{p}$ is the set of all languages for which
+there exists a polynomial TM $M$
 and a polynomial $q$ such that
-$x \in L \iff \exists u \in \{0,1\}^{q(|x|)} \forall v \in \{0,1\}^{q(|x|)} M(x, u, v) = 1 $
+$x \in L \iff \exists u \in \{0,1\}^{q(|x|)} \forall v \in
+\{0,1\}^{q(|x|)} \st M(x, u, v) = 1 $
 
-Note that $\Sigma_{2}^{p}$ contains the classes $\textbf{NP}$ and $\textbf{coNP}$.
+Note that $\Sigma_{2}^{p}$ contains the
+classes $\textbf{NP}$ and $\textbf{coNP}$.
 \end{note}
 
 \begin{note}[Polynomial Hierarchy]
-For $ i \geq$ 1, a language $L$ is in $\Sigma_{2}^{p}$ if there exists a polynomial TM $M$
-and a polynomial $q$ such that
-$x \in L \iff \exists u_{1} \in \{0,1\}^{q(|x|)} \forall u_{2} \in \{0,1\}^{q(|x|)} \ldots
+For $ i \geq$ 1, a language $L$ is in $\Sigma_{2}^{p}$ if
+there exists a polynomial TM $M$ and a polynomial $q$ such that
+$x \in L \iff \exists u_{1} \in \{0,1\}^{q(|x|)}
+  \forall u_{2} \in \{0,1\}^{q(|x|)} \ldots
 Q_{i}u_{i} \in \{0,1\}^{q(|x|)} M(x, u_{1}, \ldots, u_{i}) = 1 $,
-where $Q_i$ denotes $\forall$ or $\exists$ depending on whether $i$ is odd or even respectively.
+where $Q_i$ denotes $\forall$ or $\exists$ depending on
+whether $i$ is odd or even respectively.
 The $\textit{polynomial hierarchy}$ is the set $\textbf{PH} = \cup_{i} \Sigma_{i}^{p}$.
 \end{note}
 
@@ -35,38 +40,169 @@ We believe that the polynomial hierarchy does not collapse.
 		If $\textbf{P} = \textbf{NP}$, then $\textbf{PH} = \textbf{P}$; that is, the polynomial
 		hierarchy collapses to $\textbf{P}$.
 \end{enumerate}
-Prove 2 by induction on $i$ that $\Sigma_{i}^{p}, \Pi_{i}^{p} \subseteq \textbf{P}$.
+\end{note}
+
+\begin{note}[Sketch for Collapse at $\PTIME = \NP$]
+  Assume $\PTIME = \NP$ and induction on $i$.
+  In the base case, we have that $\Sigma_{1}^p = \NP$ and
+  $\Pi_{1}^p = \coNP$.
+  Assume now that it holds to $i - 1$, and show
+  that $\Sigma_{i}^p \subseteq P$.
+  Because $\Pi_i ^p$ consists of the complements of languages in $\Sigma_i ^p$
+  and $P$ is closed under complementation, it would also then follow that
+  $\Pi_i ^p \subseteq P$.
+
+  Let $L \in \Sigma_{i} ^p$, so by definition there is a TM $M$ and
+  polynomial $q$ such that:
+  \begin{align*}
+    x \in L \iff \exists u_1 \in \{0, 1\}^{q(|x|)} \dots
+    Q_i u_i \in \{0, 1\}^{q(|x|)} \st M(x, u_1, \dots, u_i) = 1
+  \end{align*}
+
+  Define a new $L^\prime$ as follows:
+  \begin{align*}
+    (x, u_1) \in L^\prime \iff
+    \forall u_2 \in \{0, 1\}^{q(|x|)} \dots Q_i u_i \in \{0, 1\}^{q(|x|)}
+    \st M(x, u_1, u_2, \dots, u_i) = 1
+  \end{align*}
+  Thus $L^\prime \in \Pi_{i - 1} ^p$ and by assumption, $L^\prime \in P$.
+  Let $M^\prime$ be the TM that computes $L^\prime$, we plug $M^\prime$ back
+  into the definition above and see that:
+  \begin{align*}
+    x \in L \iff \exists u_1 \in \{0, 1\}^{q(|x|)}
+    \st M^\prime (x, u_1) = 1
+  \end{align*}
+  This means that $L \in \NP$, and hence under our assumption that
+  $\PTIME = \NP$, we have $L \in \PTIME$.
 \end{note}
 
 \begin{note}
-For every $i \in N$, both $\Sigma_{i}^{p}$ and $\Pi_{i}^{p}$ have complete problems. By contrast the polynomial hierarchy itself is believed not to have a complete problem, as is shown by the following simple claim:
+For every $i \in N$, both $\Sigma_{i}^{p}$ and $\Pi_{i}^{p}$ have
+complete problems.
+By contrast the polynomial hierarchy itself is believed not to have a
+complete problem, as is shown by the following simple claim:
 
-If there exists a language $L$ that is $\textbf{PH}$-complete, then there exists an $i$ such that $\textbf{PH} = \Sigma_{i}^{p}$ (and hence the hierarchy collapses to its $i^{th}$ level.)
+If there exists a language $L$ that is $\textbf{PH}$-complete,
+then there exists an $i$ such that $\textbf{PH} = \Sigma_{i}^{p}$
+(and hence the hierarchy collapses to its $i^{th}$ level.)
+\end{note}
+
+\begin{note}[Sketch for Collapse at the $i$th Level if $\PH$-completeness]
+  Since $L \in \PH = \bigcup_i \sigma_i ^p$, there exists $i$ such that
+  $L \in \Sigma_i ^p$.
+  Since $L$ is $\PH$-complete, we can reduce every language of $\PH$ to $L$.
+  But eveyr languae that is polynomial-time reducible to a language in
+  $\Sigma_i ^p$ is itself in $\Sigma_i ^p$, and os we have shown that
+  $\PH \subseteq \Sigma_i ^p$.
 \end{note}
 
 \begin{note}
-$\textbf{PH} $is contained in PSPACE. A simple corollary of the previous claim is that unless the polynomial hierarchy collapses, $\textbf{PH} \neq \textbf{PSPACE}$. Indeed, otherwise the $\PSPACE$-complete problem $\TQBF$ defined in Section 4.2 would be PH-complete.
+$\textbf{PH} $is contained in PSPACE.
+A simple corollary of the previous claim is that unless the
+polynomial hierarchy collapses, $\textbf{PH} \neq \textbf{PSPACE}$.
+Indeed, otherwise the $\PSPACE$-complete problem $\TQBF$ defined in
+Section 4.2 would be PH-complete.
+\end{note}
+
+\begin{note}[Alternating Turing Machine]
+Alternating TMs are a generalization of non-deterministic TMs.
+Alternating TMs are similar to $\NDTM$s in the sense that they have two
+transition functions between which they can choose in each step, but they
+also have the additional feature that every internal state except
+$q_{accept}$ and $q_{halt}$ is labeled with either $\exists$ or $\forall$.
+Similar to the $\NDTM$, an $\ATM$ can evolve at every step in two possible
+ways.
+Recall that a $\NDTM$ accepts its input if there exists some sequence of
+choices that leads it to the state $q_{accept}$.
+In an $\ATM$, this existential quantifier over each choice is replaced
+with the appropriate quantifier according to the labels at each state.
+The name refers to the fact that the machine may atlernate between states
+labeled $\exists$ and $\forall$.
 \end{note}
 
 \begin{note}[Alternating Time]
-For every $T : N \to N$, we say that an alternating TM $M$ runs in $T(n)$-time if for every input $x \in \{0, 1\}^{\ast}$ and for every possible sequence of transition function choices, $M$ halts after at most $T(|x|)$ steps.
-We say that a language $L$ is in $\ATIME(T(n))$ if there is a constant $c$ and a $cT(n)$-time ATM $M$ such that for every $x \in \{0, 1\}^{\ast}$, $M$ accepts $x \iff x \in L$.
+For every $T : \mathbb{N} \to \mathbb{N}$, we say that an atlernating
+TM $M$ runs in $T(n)$-time if for every input $x \in \{0, 1\}^\ast$ and
+for every possible sequence of transition function choices, $M$ halts after
+at most $T(n)$ steps.
+We say that a language $L \in \ATIME(T(n))$ if there is a constant $c$ and
+a $c\cdot T(n)$-time $\ATM$ $M$ such that for every $x \in \{0, 1\}^\ast$,
+$M$ accepts $x$ iff $x \in L$.
+We define accepting as follows:
+
+Recall that $G_{M, x}$ denote sthe directed acyclic configuration graph on
+$M$ on input $x$, where there is an edge from a configuration $C$ to
+configuration $C^\prime$ iff $C^\prime$ can be reached from $C$ by one
+step of $M$'s transition function.
+We label some of the vertices in this graph $\ACCEPT$ by applying
+the following rules until they cannot be applied anymore:
+\begin{itemize}
+  \item
+    The configuration $C_{accept}$ where the machine is in $q_{accept}$ is
+    labeled $\ACCEPT$.
+
+  \item
+    If a configuration $C$ is in a state labeled $\exists$ and there is an
+    edge from $C$ to a configuration $C^\prime$ labeled $\ACCEPT$, then we
+    label $C^\prime$ as $\ACCEPT$.
+
+  \item
+    If a configuration $C$ is in a state labeled $\forall$ and both the
+    configurations $C^\prime$, and $C^{\prime \prime}$ that are reachable
+    from $C$ in one step are labeled $\ACCEPT$, then we label $C$ as $\ACCEPT$.
+\end{itemize}
+
+We say that $M$ accepts $x$ if at the end of this process the starting
+configuration $C_{start}$ is labeled $\ACCEPT$.
 \end{note}
 
 \begin{note}
-For every $i \in N$, we define $\Sigma_{i} \TIME(T(n))$ (resp. $\Pi_{i}\TIME(T(n))$) to be the set of languages accepted by a $T(n)$-time ATM $M$ whose initial state is labeled "$\exists$" (resp. "$\forall$") and on which every input and on every (directed) path from the starting configuration in the configuration graph, $M$ can alternate at most $i$ - 1 times from states with one label to states with the other label.
+For every $i \in N$, we define $\Sigma_{i} \TIME(T(n))$
+(resp. $\Pi_{i}\TIME(T(n))$) to be the set of languages accepted by
+a $T(n)$-time ATM $M$ whose initial state is labeled "$\exists$"
+(resp. "$\forall$") and on which every input and on every (directed) path
+from the starting configuration in the configuration graph, $M$ can alternate
+at most $i$ - 1 times from states with one label to states with the
+other label.
 \end{note}
 
 \begin{note}
-For every $i \in N$, $\Sigma_{i}^{p} = \cup_{c}\Sigma_{i}\TIME(n^c)$ and $\Pi_{i}^{p} = \cup_{c} \Pi_{i} \TIME(n^c)$.
+For every $i \in N$, $\Sigma_{i}^{p} = \cup_{c}\Sigma_{i}\TIME(n^c)$ and
+$\Pi_{i}^{p} = \cup_{c} \Pi_{i} \TIME(n^c)$.
 \end{note}
 
 \begin{note}
-Letting $\textbf{AP} = \cup_{c} \ATIME(n^c)$, we have that $\textbf{AP} = \textbf{PSPACE}$.
+Letting $\textbf{AP} = \cup_{c} \ATIME(n^c)$, we have
+that $\textbf{AP} = \textbf{PSPACE}$.
 
-Proof: $\textbf{PSPACE} \subseteq \textbf{AP}$ follows since $\TQBF$ is trivially in $\textbf{AP}$ (just "guess" values for each existentially quantified variable using an $\exists$ state and for universally quantified variables using a $\forall$ state, and do a deterministic polynomial-time computation at the end) and every $\textbf{PSPACE}$ language reduces to $\TQBF$. To show that $\textbf{AP} \in \textbf{PSPACE}$ we can use a recursive procedure similar to the one used to show that $\TQBF \in \textbf{PSPACE}$. 
+Proof: $\textbf{PSPACE} \subseteq \textbf{AP}$ follows since $\TQBF$ is
+trivially in $\textbf{AP}$ (just "guess" values for each existentially
+quantified variable using an $\exists$ state and for universally quantified
+variables using a $\forall$ state, and do a deterministic polynomial-time
+computation at the end) and every $\textbf{PSPACE}$ language reduces
+to $\TQBF$. To show that $\textbf{AP} \subseteq \textbf{PSPACE}$ we can use a
+recursive procedure similar to the one used to show
+that $\TQBF \in \textbf{PSPACE}$. 
 \end{note}
 
+\begin{note}
+  $\APSPACE = \EXP$, where $\APSPACE$ is $\PSPACE$ equiped with $\ATM$s.
+\end{note}
+
+\begin{note}
+  $\PTIME \subseteq \NP \subseteq \PSPACE \subseteq \EXP \subseteq \NEXP
+  \subseteq \EXPSPACE$.
+  By the polynomial hierarchy theorem, we also have:
+  $\PTIME \subsetneq \EXP$, $\NP \subsetneq \NEXP$, and
+  $\PSPACE \subsetneq \EXPSPACE$.
+\end{note}
+
+\begin{note}[Time/Space Tradeoff for SAT]
+  For every two functions $S, T : \mathbb{N} \to \mathbb{N}$, define
+  $\TISP(T(n), S(n))$ to be the set of languages decided by a TM $M$ that on
+  every input $x$ takes at most $O(T(|x|))$ time, and uses at most
+  $O(S(|x|))$ cells of its work tapes.
+\end{note}
 
 %%% Not formatted / Incomplete %%%
 %\begin{note}[Time/Space tradeoff for SAT]%For every two functions S, T : N ? N, define TISP(T (n), S(n)) to be the set of languages decided by a TM M that on every input x takes at most O(T (|x|)) steps and uses at most O(S(|x|)) cells of its read/write tapes. Then, SAT?? TISP(n1.1, n0.1).
