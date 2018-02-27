@@ -204,6 +204,12 @@ that $\TQBF \in \textbf{PSPACE}$.
   $O(S(|x|))$ cells of its work tapes.
 \end{note}
 
+\begin{note}[Hierarchy by Oracles]
+  For every $i \geq 2$, $\Sigma_i ^p = \NP^{\Sigma_{i - 1} \SAT}$, where the
+  latter class denotes the set of languages decided by polynomial time
+  $\NDTM$s with access to the oracle $\Sigma_{i - 1} \SAT$.
+\end{note}
+
 %%% Not formatted / Incomplete %%%
 %\begin{note}[Time/Space tradeoff for SAT]%For every two functions S, T : N ? N, define TISP(T (n), S(n)) to be the set of languages decided by a TM M that on every input x takes at most O(T (|x|)) steps and uses at most O(S(|x|)) cells of its read/write tapes. Then, SAT?? TISP(n1.1, n0.1).
 %\end{note}

@@ -52,8 +52,60 @@ $D\left(1^{f(i + 1)}\right) \neq M_i \left(1^{f(i) + 1}\right)$.
 \end{note}
 
 \begin{note}[Sketch for Ladner's Theorem]
-  We make some $L \in \NP \setminus \PTIME$ ``easy enough'' using padding so
-  that it is no longer $\NP$ complete,
-  while keeping it ``hard enough'' so that it is not $\PTIME$.
-  We do this by taking an $\NP$ complete language and ``blowing holdes'' in it.
+  We define $A$ as follows:
+  \begin{align*}
+    A = \{ x : x \in \SAT, f(|x|) \mod 2 = 0\}
+  \end{align*}
+  The goal is to make $f : \mathbb{N} \to \mathbb{N}$
+  confusing as shit to compute to fool anything in $P$
+  trying to decide $A$, and fuck up anything in $\NP$ trying to reduce to $A$.
+  We want $f$ to be unbounded, and monotonic increasing.
+  This ensures that -- by construction, if $f$ plateaus at an even number then
+  $\SAT \in \PTIME$, while if $f$ pleateaus at an odd number, then it is
+  $\NP$-complete.
+  Let $f(0) = f(1) = 2$, and $M_f$ the TM that computes $f$.
+  The computation of $f$ proceeds in two stages:
+  \begin{enumerate}
+    \item [(1)]
+        Let $|x| = n$, and for $n$ time steps use $M_f$ to compute
+        $f(0), f(1), \dots$ until we run out of time at some
+        $f(y) = k$.
+
+    \item [(2)]
+      If $k = 2i$ is even, then we try to fuck with $\PTIME$.
+      We show that if the $i$th TM were to somehow decide $A$, then this would
+      lead to contradictions.
+      Given $|x| = n$ time, we enumerate the strings $z \in \{0, 1\}^\ast$ in
+      some lexicographical order.
+      Using a decider for $\SAT$, we check if $z \in \SAT$, and if $M_i (z)$
+      accepts $z$ as input.
+      If during our $n$ time steps of runtime, we \textbf{do not} find any
+      conflicts, then we return an even number $f(|x|) = k$ to allow more time.
+      Otherwise we set $f(|x|) = k + 1$.
+
+      If $k = 2i - 1$ is odd, we show the $\SAT$ reductions some business.
+      Let $F_1, F_2, \dots$ be an enumeration of TMs that reduce $\SAT$ into
+      $A$.
+      We give these things a total of $|x| = n$ time to work, or maybe even
+      each of them $n$ time, who cares?
+      If any of them \textbf{do output} something,
+      then we yield $f(|x|) = k$ odd, and otherwise $f(|x|) = k + 1$ even.
+  \end{enumerate}
+
+  Assume by contradiction that $A \in \PTIME$.
+  This implies that there is some $M_i$ that tryna get $A$ in polynomial time.
+  Hence some value of $f$ would have gotten to some $M_i$, iterated at
+  the appropriate $z$, and then started having consistent values for which the
+  stuff do not disagree.
+  This would cause to plateau at an even value, which also implies that
+  $\SAT \in \PTIME$.
+
+  If $A$ is $\NP$-complete, then we see that there is some reduction TM $F_i$
+  that our function $f$ will have reached at some point.
+  The existence of this $F_i$ will cause $f$ to plateau at an odd value.
+  However, this implies that because $f$ is even for finite input, that $A$
+  is a finite language, and hence not $\NP$-complete because finite languages
+  are in $\PTIME$.
+
 \end{note}
+
