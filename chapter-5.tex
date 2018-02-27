@@ -24,7 +24,7 @@ The $\textit{polynomial hierarchy}$ is the set $\textbf{PH} = \cup_{i} \Sigma_{i
 \begin{note}
 $\sum_{1}^{p} = \textbf{NP}. 
 \Pi_{1}^{p} = \textbf{coNP}$. 
-For every $i$, $\Sigma_{i}^{p} \subseteq \Pi_{i+1}^{p} \subseteq \Sigma_{i}^{p}.$ 
+For every $i$, $\Sigma_{i}^{p} \subseteq \Pi_{i+1}^{p} \subseteq \Sigma_{i+2}^{p}.$ 
 Thus, $\textbf{PH} = \cup_{i > 0} \Pi_{i}^{p}$.
 \end{note}
 
@@ -211,7 +211,8 @@ that $\TQBF \in \textbf{PSPACE}$.
 \end{note}
 
 %%% Not formatted / Incomplete %%%
-%\begin{note}[Time/Space tradeoff for SAT]%For every two functions S, T : N ? N, define TISP(T (n), S(n)) to be the set of languages decided by a TM M that on every input x takes at most O(T (|x|)) steps and uses at most O(S(|x|)) cells of its read/write tapes. Then, SAT?? TISP(n1.1, n0.1).
+%\begin{note}[Time/Space tradeoff for SAT]
+%For every two functions S, T : N ? N, define TISP(T (n), S(n)) to be the set of languages decided by a TM M that on every input x takes at most O(T (|x|)) steps and uses at most O(S(|x|)) cells of its read/write tapes. Then, SAT?? TISP(n1.1, n0.1).
 %\end{note}
 
 %\begin{note}[Proof of Time/Space tradeoff for SAT]
